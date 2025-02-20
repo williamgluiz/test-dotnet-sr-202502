@@ -1,0 +1,4 @@
+services:
+  test.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: test.db
