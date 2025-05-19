@@ -84,40 +84,34 @@ Docker
 Setup
 Clone the repository:
 
-bash
-Copy
-Edit
+```
 git clone https://github.com/williamgluiz/test-dotnet-sr-202502.git
 cd applicant-tracking-api
+```
 
 Apply EF Core migrations:
 
-bash
-Copy
-Edit
-dotnet ef database update --project ApplicantTracking.Infrastructure
+```dotnet ef database update --project ApplicantTracking.Infrastructure```
 
 Configure your connection string using User Secrets:
-bash
-Copy
-Edit
+
+```
 cd ApplicantTracking.API
 dotnet user-secrets init
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5433;Database=ApplicantTrackingDb;Username=postgres;Password=yourpassword"
-
+```
 Running the API
-bash
-Copy
-Edit
+
+```
 cd ApplicantTracking.API
 dotnet run
+```
 
 Once the API is running, access the Swagger UI at:
 
-bash
-Copy
-Edit
+```
 https://localhost:<port>/swagger/index.html
+```
 
 🔎 API Endpoints
 All routes are prefixed with /api/candidates.
