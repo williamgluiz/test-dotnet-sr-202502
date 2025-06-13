@@ -48,7 +48,6 @@ namespace ApplicantTracking.Application.Events.Candidate.Commands
             }
             catch (Exception ex) 
             {
-
                 throw new ApplicationException("An error occurred while handling the candidate updated event.", ex);
             }
         }

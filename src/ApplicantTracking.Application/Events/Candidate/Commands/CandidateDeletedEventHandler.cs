@@ -34,18 +34,25 @@ namespace ApplicantTracking.Application.Events.Candidate.Commands
         /// <param name="cancellationToken">Cancellation token.</param>
         public async Task Handle(CandidateDeletedEvent deletedEvent, CancellationToken cancellationToken)
         {
-            Domain.Models.Candidate candidate = await _candidateRepository.GetByIdAsync(deletedEvent.Id);
+            try
+            {
+                Domain.Models.Candidate candidate = await _candidateRepository.GetByIdAsync(deletedEvent.Id);
 
-            Domain.Models.Timeline timeline = new(
-                0,
-                TimelineTypes.Delete,
-                deletedEvent.Id,
-                Newtonsoft.Json.JsonConvert.SerializeObject(candidate),
-                null
-            );
+                Domain.Models.Timeline timeline = new(
+                    0,
+                    TimelineTypes.Delete,
+                    deletedEvent.Id,
+                    Newtonsoft.Json.JsonConvert.SerializeObject(candidate),
+                    null
+                );
 
-            await _timelineRepository.AddAsync(timeline);
-            await _unitOfWork.CommitAsync(cancellationToken);
+                await _timelineRepository.AddAsync(timeline);
+                await _unitOfWork.CommitAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while handling the candidate deleted event.", ex);
+            }
         }
     }
 }

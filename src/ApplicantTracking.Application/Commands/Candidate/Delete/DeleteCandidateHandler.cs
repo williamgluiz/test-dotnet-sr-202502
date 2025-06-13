@@ -34,14 +34,21 @@ namespace ApplicantTracking.Application.Commands.Candidate.Delete
         /// <returns>True if the candidate was found and deleted; otherwise, false.</returns>
         public async Task<bool> Handle(DeleteCandidateCommand request, CancellationToken cancellationToken)
         {
-            var candidate = await _candidateRepository.GetByIdAsync(request.Id);
+            try
+            {
+                var candidate = await _candidateRepository.GetByIdAsync(request.Id);
 
-            if (candidate == null) return false;
+                if (candidate == null) return false;
 
-            await _candidateRepository.DeleteAsync(candidate.Id);
-            await _mediator.Publish(new CandidateDeletedEvent(request.Id), cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
-            return true;
+                await _candidateRepository.DeleteAsync(candidate.Id);
+                await _mediator.Publish(new CandidateDeletedEvent(request.Id), cancellationToken);
+                await _unitOfWork.CommitAsync(cancellationToken);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while handling the candidate delete command.", ex);
+            }
         }
     }
 }

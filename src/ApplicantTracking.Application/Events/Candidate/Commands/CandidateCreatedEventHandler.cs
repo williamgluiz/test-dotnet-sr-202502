@@ -42,14 +42,14 @@ namespace ApplicantTracking.Application.Events.Candidate.Commands
                         createdEvent.Candidate.Surname,
                         createdEvent.Candidate.Birthdate,
                         createdEvent.Candidate.Email
-                    );
+                );
 
                 var timeline = new Domain.Models.Timeline(
                     0,
                     TimelineTypes.Create,
                     createdEvent.Candidate.Id,
                     JsonConvert.SerializeObject(candidate),
-                    JsonConvert.SerializeObject(candidate)
+                    null
                 );
 
                 await _timelineRepository.AddAsync(timeline);
@@ -57,12 +57,8 @@ namespace ApplicantTracking.Application.Events.Candidate.Commands
             }
             catch (Exception ex)
             {
-                // Aqui você pode logar a exceção, se desejar:
-                // _logger.LogError(ex, "Error handling CandidateCreatedEvent");
-
-                // Re-lança a exceção mantendo o stack trace original
                 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex).Throw();
-                throw; // Necessário para satisfazer o compilador, nunca será alcançado
+                throw; 
             }
         }
     }

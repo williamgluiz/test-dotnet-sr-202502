@@ -15,8 +15,8 @@ namespace ApplicantTracking.Infrastructure.Mappings
             builder.HasKey(t => t.Id);
             builder.Property(t => t.TimelineTypeId).IsRequired();
             builder.Property(t => t.IdAggregateRoot).IsRequired();
-            builder.Property(t => t.OldData).IsRequired();
-            builder.Property(t => t.NewData).IsRequired();
+            builder.Property(t => t.OldData);
+            builder.Property(t => t.NewData);
             builder.Property(t => t.CreatedAt).IsRequired();
             builder.Property(t => t.LastUpdatedAt);
         }
